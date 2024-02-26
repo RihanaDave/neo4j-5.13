@@ -1,0 +1,18 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+# Another verbose option
+#export DH_OPTIONS=-v
+
+%:
+	dh $@
+
+# Our native dependencies are already stripped
+override_dh_strip:
+
+# Ubuntu 22.04 uses zstd compression by default, which Debian does not support.
+# This forces debuild to use xz instead.
+override_dh_builddeb:
+	dh_builddeb -- -Zxz

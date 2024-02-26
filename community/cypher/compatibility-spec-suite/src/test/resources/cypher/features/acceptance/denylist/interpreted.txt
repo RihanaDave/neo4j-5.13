@@ -1,0 +1,53 @@
+// path assignment is not supported yet, solved in https://trello.com/c/ufHPMj0x/
+Feature "QuantifiedPathPatternAcceptance": Scenario "Path and subpath variables"
+
+// Horizontal aggregations are currently not supported. Solved in https://trello.com/c/hO4INisk/
+Feature "QuantifiedPathPatternAcceptance": Scenario "Referencing previously-bound, non-local unconditional singleton"
+Feature "QuantifiedPathPatternAcceptance": Scenario "Referencing non-local unconditional singletons within the same path pattern containing the quantified path pattern"
+Feature "QuantifiedPathPatternAcceptance": Scenario "Using an unconditional singleton together with a group variable to formulate an expression as input to an aggregating operation"
+Feature "QuantifiedPathPatternAcceptance": Scenario "Using an multiple unconditional singletons together with a group variable to formulate an expression as input to an aggregating operation"
+Feature "QuantifiedPathPatternAcceptance": Scenario "Multiple references to the same group variable within an aggregating operation"
+Feature "QuantifiedPathPatternAcceptance": Scenario "Multiple aggregating operations"
+
+// Leaving out nodes is currently not supported. Will be handled in https://trello.com/c/rcFdSCvc/
+Feature "QuantifiedPathPatternAcceptance": Scenario "Leaving out the nodes adjacent to a QPP"
+
+// Non-local predicates not implemented. Solved in https://trello.com/c/XexwQoc1/
+Feature "QuantifiedPathPatternAcceptance": Scenario "References to non-local unconditional singletons that are dependent on the evaluation of the quantification"
+
+// Uses enterprise procedure
+Feature "CollectExpressionAcceptance": Scenario "COLLECT with updating procedure and yield should fail"
+
+// CIP-101: item-by-item visibility for CREATE
+Feature "Create": Scenario "Creating patterns first evaluates all contained pattern expressions"
+Feature "Create": Scenario "Creating patterns first evaluates all contained pattern comprehensions"
+Feature "Create": Scenario "Creating patterns first evaluates all contained count expressions"
+Feature "Create": Scenario "Creating patterns first evaluates all contained exists expressions"
+
+// Path selectors currently are not supported. Will be solved by https://trello.com/c/aRGMlLiS
+Feature "PathSelectorAcceptance": Scenario "Find same paths with different noise words (PATH, PATHS, GROUP vs GROUPS) - no predicate"
+Feature "PathSelectorAcceptance": Scenario "Find ANY paths with different noise words (PATH, PATHS) - no predicate"
+Feature "PathSelectorAcceptance": Scenario "Find same paths with different noise words (PATH, PATHS, GROUP vs GROUPS) - predicate"
+Feature "PathSelectorAcceptance": Scenario "Find ANY paths with different noise words (PATH, PATHS) - predicate"
+Feature "PathSelectorAcceptance": Scenario "Element pattern predicates are applied before path selector"
+Feature "PathSelectorAcceptance": Scenario "Path pattern predicates are applied before path selector"
+Feature "PathSelectorAcceptance": Scenario "Graph pattern predicates are applied after path selector - un-parenthesised"
+Feature "PathSelectorAcceptance": Scenario "Graph pattern predicates are applied after path selector - parenthesised"
+Feature "PathSelectorAcceptance": Scenario "Different path selectors return correct number of paths where multiple paths have same length"
+Feature "PathSelectorAcceptance": Scenario "ANY path selectors return correct number of paths where multiple paths have same length"
+Feature "PathSelectorAcceptance": Scenario "Return correct paths under different path selectors where there are multiple pairs of nodes"
+Feature "PathSelectorAcceptance": Scenario "OPTIONAL MATCH does not reduce cardinality under different path selectors"
+Feature "PathSelectorAcceptance": Scenario "Find paths with two concatenated QPP under different path selectors"
+Feature "PathSelectorAcceptance": Scenario "Find paths under different path selectors with QPP that contains a rigid path size greater than one"
+Feature "PathSelectorAcceptance": Scenario "Find paths under different path selectors with fixed path concatenated with QPP"
+Feature "PathSelectorAcceptance": Scenario "Find ANY path under different path selectors with fixed path concatenated with QPP"
+Feature "PathSelectorAcceptance": Scenario "Find shortest simple cycle under different path selectors"
+Feature "PathSelectorAcceptance": Scenario "Find ANY simple cycle under different path selectors"
+Feature "PathSelectorAcceptance": Scenario "Lower bound of quantifier prunes some shortest paths under different path selectors"
+Feature "PathSelectorAcceptance": Scenario "Lower bound of quantifier prunes ANY paths under different path selectors"
+Feature "PathSelectorAcceptance": Scenario "Path selectors can be used in EXISTS, COLLECT and COUNT"
+Feature "PathSelectorAcceptance": Scenario "ANY path selectors can be used in EXISTS, COLLECT and COUNT"
+Feature "PathSelectorAcceptance": Scenario "Pre-GPM and GPM shortest can be mixed in query if in separate clauses (CIP-40)"
+Feature "PathSelectorAcceptance": Scenario "Fixed-length patterns allowed with path selectors"
+Feature "PathSelectorAcceptance": Scenario "Selective path patterns can be combined when in separate MATCH clauses"
+Feature "PathSelectorAcceptance": Scenario "Node pattern only allowed with path selectors"

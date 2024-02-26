@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.neo4j</groupId>
+    <artifactId>parent</artifactId>
+    <version>5.13.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.neo4j.build</groupId>
+  <artifactId>community-build</artifactId>
+
+  <name>Neo4j - Community Build</name>
+  <packaging>pom</packaging>
+  <description>Project that builds the Neo4j Community distribution.</description>
+  <url>http://components.neo4j.org/${project.artifactId}/${project.version}</url>
+
+  <modules>
+    <module>zstd-proxy</module>
+    <module>token-api</module>
+    <module>schema</module>
+    <module>import-util</module>
+    <module>id-generator</module>
+    <module>lock</module>
+    <module>monitoring</module>
+    <module>wal</module>
+    <module>record-storage-engine</module>
+    <module>common</module>
+    <module>configuration</module>
+    <module>resource</module>
+    <module>collections</module>
+    <module>concurrent</module>
+    <module>graphdb-api</module>
+    <module>procedure-api</module>
+    <module>procedure-compiler</module>
+    <module>procedure</module>
+    <module>unsafe</module>
+    <module>io</module>
+    <module>native</module>
+    <module>diagnostics</module>
+    <module>kernel-api</module>
+    <module>csv</module>
+    <module>logging</module>
+    <module>security</module>
+    <module>codegen</module>
+    <module>index</module>
+    <module>gbptree-tests</module>
+    <module>kernel</module>
+    <module>kernel-test-utils</module>
+    <module>kernel-test</module>
+    <module>lucene-index</module>
+    <module>fulltext-index</module>
+    <module>graph-algo</module>
+    <module>neo4j</module>
+    <module>neo4j-community</module>
+    <module>import-tool</module>
+    <module>server-api</module>
+    <module>bolt</module>
+    <module>server</module>
+    <module>server-test-utils</module>
+    <module>consistency-check</module>
+    <module>neo4j-harness</module>
+    <module>neo4j-slf4j-provider</module>
+    <module>dbms</module>
+    <module>command-line</module>
+    <module>random-values</module>
+    <module>values</module>
+    <module>ssl</module>
+    <module>spatial-index</module>
+    <module>community-it</module>
+    <module>data-collector</module>
+    <module>testing</module>
+    <module>neo4j-exceptions</module>
+    <module>layout</module>
+    <module>push-to-cloud</module>
+    <module>fabric</module>
+    <module>capabilities</module>
+    <module>storage-engine-util</module>
+    <module>bootcheck</module>
+  </modules>
+
+  <profiles>
+    <profile>
+      <id>include-cypher</id>
+      <activation>
+        <property>
+          <name>!skipCypher</name>
+        </property>
+      </activation>
+      <modules>
+        <module>cypher</module>
+        <module>cypher-shell</module>
+      </modules>
+    </profile>
+  </profiles>
+</project>

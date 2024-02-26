@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.neo4j</groupId>
+        <artifactId>cypher-parent</artifactId>
+        <version>5.13.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>neo4j-front-end-parent</artifactId>
+    <packaging>pom</packaging>
+    <name>openCypher Front End Parent</name>
+    <description>Project that builds the openCypher front end modules</description>
+    <url>http://components.neo4j.org/${project.artifactId}/${project.version}</url>
+
+    <properties>
+        <license.id>neo4j_apache_v2</license.id>
+        <licensing.prepend.text>licensing/notice-apache2-prefix.txt</licensing.prepend.text>
+        <license-text.header>license/neo4j_apache_v2/header.txt</license-text.header>
+    </properties>
+
+    <scm>
+        <connection>scm:git:git://github.com/openCypher/front-end.git</connection>
+        <developerConnection>scm:git:git://github.com/openCypher/front-end.git</developerConnection>
+        <url>https://github.com/openCypher/front-end</url>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>Apache-2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <modules>
+        <module>ast</module>
+        <module>rewriting</module>
+        <module>frontend</module>
+        <module>util</module>
+        <module>test-util</module>
+        <module>expressions</module>
+        <module>cypher-macros</module>
+        <module>ast-factory</module>
+        <module>javacc-parser</module>
+        <module>antlr-parser</module>
+        <module>neo4j-ast-factory</module>
+        <module>neo4j-cst-factory</module>
+        <module>ast-generator</module>
+    </modules>
+
+    <profiles>
+        <profile>
+            <id>scala-fatal-warnings</id>
+            <activation>
+                <property>
+                    <name>scalaFatalWarnings</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.alchim31.maven</groupId>
+                        <artifactId>scala-maven-plugin</artifactId>
+                        <configuration>
+                            <args combine.children="append">
+                                <arg>-Xfatal-warnings</arg>
+                                <arg>-feature</arg>
+                            </args>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

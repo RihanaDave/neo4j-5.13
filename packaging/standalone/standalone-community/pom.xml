@@ -1,0 +1,205 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.neo4j.assembly</groupId>
+        <artifactId>neo4j-standalone</artifactId>
+        <version>5.13.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>neo4j-community-standalone</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Neo4j - Community Server Assembler</name>
+
+    <description>This project assembles the Neo4j Community stand-alone distribution,
+        pulling together all the deliverable artifacts and packaging them
+        into a downloadable installer.
+    </description>
+    <url>http://components.neo4j.org/${project.artifactId}/${project.version}</url>
+
+    <scm>
+        <connection>scm:git:git://github.com/neo4j/neo4j.git</connection>
+        <developerConnection>scm:git:git@github.com:neo4j/neo4j.git</developerConnection>
+        <url>https://github.com/neo4j/neo4j</url>
+    </scm>
+
+    <properties>
+        <neo4j.mainClass>org.neo4j.server.CommunityEntryPoint</neo4j.mainClass>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.10</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <licenseHeaderFile>../../../build-resources/src/main/resources/${license-text.header}</licenseHeaderFile> <!-- Relative path because this plugin does not read from resources -->
+                    <assembleDirectory>${project.build.directory}/generated</assembleDirectory>
+                    <generateRepository>false</generateRepository>
+                    <endorsedDir>lib</endorsedDir>
+                    <repositoryLayout>flat</repositoryLayout>
+                    <useAllProjectDependencies>true</useAllProjectDependencies>
+                    <useWildcardClassPath>true</useWildcardClassPath>
+                    <extraJvmArguments>-Xmx128m</extraJvmArguments>
+                    <platforms>
+                        <platform>unix</platform>
+                    </platforms>
+                    <programs>
+                        <program>
+                            <mainClass>org.neo4j.server.startup.Neo4jBoot</mainClass>
+                            <id>neo4j</id>
+                        </program>
+                        <program>
+                            <mainClass>org.neo4j.server.startup.Neo4jAdminBoot</mainClass>
+                            <id>neo4j-admin</id>
+                        </program>
+                    </programs>
+                    <!-- The used template is the default one with JAVA_OPS removed.
+                        neo4j-admin uses JAVA_OPS, so we don't want the bootstrap JVM reacting to that variable -->
+                    <unixScriptTemplate>${basedir}/src/main/appassembler/unix-template</unixScriptTemplate>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-completion-script</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>org.neo4j.server.startup.TabCompletionGenerator</mainClass>
+                    <arguments>
+                        <argument>${project.build.directory}/completion</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <attach>false</attach>
+                    <finalName>neo4j-community-${project.version}</finalName>
+                    <appendAssemblyId>true</appendAssemblyId>
+                    <outputDirectory>${project.parent.build.directory}</outputDirectory>
+                    <delimiters>
+                        <!-- Because we are filtering shell scripts, which use '@' on windows and '${}' on *nix, change the
+                 parameter substitution pattern to not clash with those. -->
+                        <delimiter>#{*}</delimiter>
+                    </delimiters>
+                    <recompressZippedFiles>false</recompressZippedFiles>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>community-unix-dist</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assemblies/community-unix-dist.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>community-windows-dist</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assemblies/community-windows-dist.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.neo4j.build.plugins</groupId>
+                <artifactId>licensing-maven-plugin</artifactId>
+                <configuration>
+                    <prependText>licensing/notice-gpl-prefix.txt</prependText>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>list-all-licenses</id>
+                        <configuration>
+                            <thirdPartyLicensingFilename>${project.artifactId}-${neo4j.version}-NOTICE.txt</thirdPartyLicensingFilename>
+                            <checkExistingNoticeFile>${project.build.directory}/../src/main/distribution/text/community/NOTICE.txt</checkExistingNoticeFile>
+                            <listReport>${project.artifactId}-${neo4j.version}-LICENSES.txt</listReport>
+                            <checkExistingLicensesFile>${project.build.directory}/../src/main/distribution/text/community/LICENSES.txt
+                            </checkExistingLicensesFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-bootcheck</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j.app</groupId>
+            <artifactId>neo4j-server</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-push-to-cloud</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>cypher-shell</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j.driver</groupId>
+            <artifactId>neo4j-java-driver</artifactId>
+            <!-- scope from public pom seems to overwrite the scope from cypher-shell -->
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>test-utils</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>io-test-utils</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

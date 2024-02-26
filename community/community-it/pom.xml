@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.neo4j</groupId>
+        <artifactId>parent</artifactId>
+        <version>5.13.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>community-integration-tests</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Neo4j - Community Integration Tests</name>
+    <description>Neo4j community edition integration tests modules.</description>
+
+    <modules>
+        <module>it-test-support</module>
+        <module>record-storage-engine-it</module>
+        <module>kernel-it</module>
+        <module>index-it</module>
+        <module>import-it</module>
+        <module>dbms-it</module>
+        <module>algo-it</module>
+        <module>bolt-it</module>
+        <module>community-it</module>
+        <module>fabric-it</module>
+        <module>security-it</module>
+        <module>no-opens-it</module>
+        <module>slf4j-logging-it</module>
+    </modules>
+
+    <profiles>
+        <profile>
+            <id>include-cypher</id>
+            <activation>
+                <property>
+                    <name>!skipCypher</name>
+                </property>
+            </activation>
+            <modules>
+                <module>cypher-it</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>test-block</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>NEO4J_OVERRIDE_STORE_FORMAT</name>
+                    <value>block</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.neo4j</groupId>
+                    <artifactId>neo4j-block-storage-engine</artifactId>
+                    <version>${project.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.neo4j.build.plugins</groupId>
+                            <artifactId>licensing-maven-plugin</artifactId>
+                            <configuration>
+                                <skip>true</skip>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+</project>
