@@ -349,8 +349,7 @@
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>3.1.2</version>
           <configuration>
-            <statelessTestsetReporter
-                    implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
+            <statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
               <disable>false</disable>
               <usePhrasedFileName>false</usePhrasedFileName>
               <usePhrasedTestSuiteClassName>false</usePhrasedTestSuiteClassName>
@@ -1483,7 +1482,7 @@
       <dependency>
         <groupId>com.github.luben</groupId>
         <artifactId>zstd-jni</artifactId>
-        <version>1.5.5-5</version>
+        <version>1.5.5-9</version>
       </dependency>
 
       <!--
