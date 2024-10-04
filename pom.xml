@@ -349,8 +349,7 @@
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>3.1.2</version>
           <configuration>
-            <statelessTestsetReporter
-                    implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
+            <statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
               <disable>false</disable>
               <usePhrasedFileName>false</usePhrasedFileName>
               <usePhrasedTestSuiteClassName>false</usePhrasedTestSuiteClassName>
@@ -1439,7 +1438,7 @@
       <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
-        <version>2.13.0</version>
+        <version>2.14.0</version>
       </dependency>
       <dependency>
         <groupId>commons-logging</groupId>
