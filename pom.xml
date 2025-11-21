@@ -152,7 +152,7 @@
     <asm.version>9.5</asm.version>
     <metrics.version>4.2.19</metrics.version>
     <scala.target.vm>17</scala.target.vm>
-    <jersey.version>2.34</jersey.version>
+    <jersey.version>2.46</jersey.version>
     <junit.version>5.10.0</junit.version>
     <junit.platform.version>1.10.0</junit.platform.version>
     <mockito.version>5.5.0</mockito.version>
@@ -349,8 +349,7 @@
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>3.1.2</version>
           <configuration>
-            <statelessTestsetReporter
-                    implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
+            <statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
               <disable>false</disable>
               <usePhrasedFileName>false</usePhrasedFileName>
               <usePhrasedTestSuiteClassName>false</usePhrasedTestSuiteClassName>
