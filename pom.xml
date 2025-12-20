@@ -164,7 +164,7 @@
     <amazon-sdk.version>1.12.541</amazon-sdk.version>
     <guava.version>32.1.2-jre</guava.version>
     <awaitility.version>4.2.0</awaitility.version>
-    <log4j.version>2.20.0</log4j.version>
+    <log4j.version>2.25.3</log4j.version>
     <slf4j.version>2.0.7</slf4j.version>
     <neo4j-java-driver.version>5.11.0</neo4j-java-driver.version>
     <eclipse-collections.version>11.1.0</eclipse-collections.version>
@@ -349,8 +349,7 @@
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>3.1.2</version>
           <configuration>
-            <statelessTestsetReporter
-                    implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
+            <statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
               <disable>false</disable>
               <usePhrasedFileName>false</usePhrasedFileName>
               <usePhrasedTestSuiteClassName>false</usePhrasedTestSuiteClassName>
